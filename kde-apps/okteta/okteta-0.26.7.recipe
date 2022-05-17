@@ -17,7 +17,7 @@ HOMEPAGE="https://apps.kde.org/okteta/"
 COPYRIGHT="2010-2021 KDE Organisation"
 LICENSE="GNU GPL v2
 	GNU GPL v3"
-REVISION="1"
+REVISION="2"
 SOURCE_URI="https://github.com/KDE/okteta/archive/refs/tags/v$portVersion.tar.gz"
 CHECKSUM_SHA256="8b63bb48218f7b147488c08f512b3a777d1cb0c786e9ad8b8da66ea261de4862"
 SOURCE_DIR="okteta-$portVersion"
@@ -167,12 +167,12 @@ BUILD()
 
 	cmake .. \
 		-DCMAKE_BUILD_TYPE=Release \
-		-DCMAKE_INSTALL_PREFIX=$binDir \
+		-DCMAKE_INSTALL_PREFIX=$prefix \
 		-DCMAKE_INSTALL_INCLUDEDIR=$includeDir \
 		-DCMAKE_INSTALL_DATAROOTDIR=$dataDir \
 		-DCMAKE_INSTALL_LIBDIR=$libDir \
 		-DCMAKE_INSTALL_BINDIR=$binDir \
-		-DSHARE_INSTALL_PREFIX=$dataDir \
+		-DKDE_INSTALL_DATAROOTDIR=$dataDir \
 		-DKDE_INSTALL_PLUGINDIR=$addOnsDir/Qt5 \
 		-DECM_DIR=/system/data/cmake/Modules/ECM/cmake
 
@@ -189,11 +189,11 @@ INSTALL()
 	mv $binDir/okteta $appsDir/Okteta
 
 	# move mkspecs
-	mv $binDir/mkspecs $addOnsDir/Qt5
+	mv $prefix/mkspecs $addOnsDir/Qt5
 
 	# move xdg files and clean bindir
-	mv $binDir/etc/xdg $settingsDir
-	rm -r $binDir/etc
+	mv $prefix/etc/xdg $settingsDir
+	rm -r $prefix/etc
 
 	rm -rf $dataDir/{applications,config.kcfg,icons,kservices5,metainfo,okteta}
 
